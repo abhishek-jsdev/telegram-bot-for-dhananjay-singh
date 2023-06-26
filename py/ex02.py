@@ -28,7 +28,8 @@ async def new_message_handler(event):
     peer_id = event.message.peer_id
     entities = event.message.entities
 
-    print(event)
+    with open("logs.txt", "a") as f:
+        print(event, file=f)
 
     # if peer_id.channel_id:
     #     print('cha')
