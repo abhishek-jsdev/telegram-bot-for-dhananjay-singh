@@ -28,10 +28,12 @@ async def new_message_handler(event):
     peer_id = event.message.peer_id
     entities = event.message.entities
 
+    print(event)
+
     # if peer_id.channel_id:
     #     print('cha')
-    if peer_id.chat_id:
-        print(type(peer_id))
+    # if peer_id.chat_id:
+    #     print(type(peer_id))
     
     # if peer_id.has_key('channel_id'):    
     #     for entity in entities:
