@@ -3,7 +3,7 @@
 
 import urlexpander
 from telethon import TelegramClient, events, errors
-from telethon.tl.types import MessageEntityTextUrl, PeerChat
+from telethon.tl.types import MessageEntityTextUrl, PeerChannel
 
 # Use your own values from my.telegram.org
 api_id=20340026
@@ -23,25 +23,25 @@ async def new_entity_url(url):
 # listen for new message
 @client.on(events.NewMessage)
 async def new_message_handler(event):
+    try:
+        message = event.message.message
+        peer_id = event.message.peer_id
+        entities = event.message.entities
 
-    # message = event.message.message
-    # peer_id = event.message.peer_id
-    # entities = event.message.entities
+        if isinstance(peer_id,PeerChannel):
+            for entity in entities:
+                if isinstance(entity,MessageEntityTextUrl):
+                    # entity.url = await new_entity_url(entity.url)
+                    print()
 
-    with open("logs.txt", "a") as f:
-        print(event, file=f)
+        with open("logs.txt", "a") as f:
+            dict={'event':event,'message':message,'entities':entities,'peer_id':peer_id}
+            print(dict, file=f)
+            print()
 
-    # if peer_id.channel_id:
-    #     print('cha')
-    # if peer_id.chat_id:
-    #     print(type(peer_id))
-    
-    # if peer_id.has_key('channel_id'):    
-    #     for entity in entities:
-    #         if entity.has_key('url'):
-    #             entity.url = await new_entity_url(entity.url)
-                # print(entity.url)    
-    # print(peer_id,message)
+        # print(peer_id,message)
+    except:
+        pass
 
 client.start()
 client.run_until_disconnected()
