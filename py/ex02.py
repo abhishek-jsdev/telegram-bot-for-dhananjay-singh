@@ -24,9 +24,9 @@ async def new_entity_url(url):
 @client.on(events.NewMessage)
 async def new_message_handler(event):
 
-    message = event.message.message
-    peer_id = event.message.peer_id
-    entities = event.message.entities
+    # message = event.message.message
+    # peer_id = event.message.peer_id
+    # entities = event.message.entities
 
     with open("logs.txt", "a") as f:
         print(event, file=f)
