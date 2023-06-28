@@ -83,14 +83,22 @@ def update_amazon_link(long_url):
     
     # start=re.match('tag=',long_url)
     # print(re.search('tag=', long_url))
-    print(long_url[long_url.rfind('tag=')+4:])
-    long_url = long_url+'&'
-    if re.search('tag=', long_url):
-        pattern = r'tag=(.*?)&'
-        replaced_string = re.sub(pattern, affiliate_id,long_url)
-    else:
-        replaced_string = long_url+'&tag='+affiliate_id    
-    print('re: ',replaced_string)
+    print(long_url)
+    # long_url_parts = long_url.split('?')
+    # long_url_arr = long_url_parts[0] + long_url_parts[1].split('&')
+    # print(long_url_arr)
+
+    # long_url_arr.extend()
+    # long_url_arr = re.split("&|?",long_url)
+    # print(long_url_arr)
+    # print(long_url[long_url.rfind('tag=')+4:])
+    # long_url = long_url+'&'
+    # if re.search('tag=', long_url):
+    #     pattern = r'tag=(.*?)&'
+    #     replaced_string = re.sub(pattern, affiliate_id,long_url)
+    # else:
+    #     replaced_string = long_url+'&tag='+affiliate_id    
+    # print('re: ',replaced_string)
     # return replaced_string
 
 # listen for new message

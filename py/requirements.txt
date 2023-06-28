@@ -1,3 +1,5 @@
-urlexpander
 telethon
 crypty
+py-mon
+watchdog
+requests
