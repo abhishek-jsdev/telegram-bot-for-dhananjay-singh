@@ -63,12 +63,10 @@ def update_url(long_url, unrequire_parameters):
         return long_url
 
 
-unrequire_parameters = ["ref", "red", "tag", "tat", "th", "linkCode", "psc"]
+unrequire_parameters = ["ref","ref_", "red", "tag", "tat", "th", "linkCode", "psc"]
 
 
 def get_url_info(url):
-    # print(url)
-    # url = ''.join(url.splitlines())
     url_info = {"long": url, "is_amazon_link": False, "updated": url}
     url_info["long"] = expand_short_url(url)
     url_info["is_amazon_link"] = is_amazon_link(url_info["long"])
@@ -76,7 +74,22 @@ def get_url_info(url):
         url_info["updated"] = update_url(url_info["long"], unrequire_parameters)
     return url_info
 
+# def get_url_info2(url):
+#     url_info = {"long": url, "is_amazon_link": False, "updated": url}
 
+#     # expand url if shortened
+#     response = requests.head(short_url, allow_redirects=True)
+#     url_info["long"] =response.url
+    
+#     # is amazon link
+#     if "https://www.amazon.in" in url_info["long"]:
+#         url_info["is_amazon_link"]=True
+    
+#     # generate new url
+#     if url_info["is_amazon_link"]:
+#         url_info["updated"] = update_url(url_info["long"], unrequire_parameters)
+    
+#     return url_info
 # # Test
 # urls = [
 #     "https://www.amazon.in/b?ie=UTF8&node=77323998031&ref=ebd",
