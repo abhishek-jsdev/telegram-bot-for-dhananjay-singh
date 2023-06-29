@@ -20,7 +20,7 @@ our_channel_id = -980741307
 
 
 # listen for new message
-@client.on(events.NewMessage(chats=channels_id, incoming=True, forwards=True))
+@client.on(events.NewMessage(chats=channels_id, incoming=True, forwards=False))
 async def new_message_handler(event):
     try:
         print(time.ctime(), "info:\n", "RECEIVED NEW MESSAGE...")
