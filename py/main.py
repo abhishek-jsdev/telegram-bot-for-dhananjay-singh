@@ -1,7 +1,7 @@
 import time, os
 
 os.system("cls" if os.name == "nt" else "clear")
-print(time.ctime(), "STARTING...")
+print(time.ctime(), "START!")
 
 from telethon import TelegramClient, events
 from telethon.tl.types import MessageEntityTextUrl, MessageEntityUrl
@@ -23,13 +23,12 @@ our_channel_id = -980741307
 @client.on(events.NewMessage(chats=channels_id, incoming=True, forwards=False))
 async def new_message_handler(event):
     try:
-        print(time.ctime(), "info:\n", "RECEIVED NEW MESSAGE...")
+        print(time.ctime(), "info:", "RECEIVED NEW MESSAGE...")
 
-        is_amazon_link = True
+        is_amazon_link = False
 
         for entity in event.message.entities:
-            message = event.message.text
-            url = ""
+            url = False
 
             if isinstance(entity, MessageEntityUrl):
                 url = event.message.raw_text[
@@ -39,20 +38,20 @@ async def new_message_handler(event):
                 url = entity.url
 
             if url:
-                # generate new tiny affiliate url
+                # generate new affiliate url using tiny url api
                 url_info = get_url_info(url)
                 is_amazon_link = url_info["is_amazon_link"]
                 # replace url if it's a amazon link
                 if is_amazon_link:
-                    new_message = message.replace(url, url_info["updated"])
+                    new_message = event.message.text.replace(url, url_info["updated"])
                     event.message.text = new_message
 
         if is_amazon_link:
-            print(time.ctime(), "info:\n", "SENDING MESSAGE...")
+            print(time.ctime(), "info:", "SENDING MESSAGE...")
             await client.send_message(our_channel_id, event.message)
-            print(time.ctime(), "info:\n", "MESSAGE SEND!")
+            print(time.ctime(), "info:", "MESSAGE SEND!")
         else:
-            print(time.ctime(), "warn:\n", "NOT AN AMAZON LINK!")
+            print(time.ctime(), "warn:", "NOT AN AMAZON LINK!")
 
     except Exception as error:
         print(time.ctime(), "error:")
@@ -62,6 +61,5 @@ async def new_message_handler(event):
         pass
 
 
-with client:
-    client.start()
-    client.run_until_disconnected()
+client.start()
+client.run_until_disconnected()

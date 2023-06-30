@@ -1,0 +1,7 @@
+lead category list format
+	(number)
+    leads received 
+		(percentage)(number) visits done
+			(percentage)(number) booking done leads
+				(percentage)(number) leads failed
+					(percentage)(number) junk leads
