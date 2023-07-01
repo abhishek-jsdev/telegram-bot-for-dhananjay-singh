@@ -20,9 +20,6 @@ def url_exists(long_url):
         return False
 
 
-affiliate_id = "dualwarez-21"
-
-
 def short_url(long_url):
     # TinyURL shortener service
     type_tiny = pyshorteners.Shortener()
@@ -30,7 +27,7 @@ def short_url(long_url):
     return short_url
 
 
-def update_url(long_url, unrequire_parameters):
+def update_url(long_url, unrequire_parameters,affiliate_id):
     long_url_parts = long_url.rsplit("/", 1)
     new_url = long_url_parts[0] + "/"
 
@@ -66,12 +63,13 @@ def update_url(long_url, unrequire_parameters):
 unrequire_parameters = ["ref","ref_", "red", "tag", "tat", "th", "linkCode", "psc"]
 
 
-def get_url_info(url):
+# generate new affiliate url using tiny url api
+def parse_url(url,amazon_affiliate_id):
     url_info = {"long": url, "is_amazon_link": False, "updated": url}
     url_info["long"] = expand_short_url(url)
     url_info["is_amazon_link"] = is_amazon_link(url_info["long"])
     if url_info["is_amazon_link"]:
-        url_info["updated"] = update_url(url_info["long"], unrequire_parameters)
+        url_info["updated"] = update_url(url_info["long"], unrequire_parameters,amazon_affiliate_id)
     return url_info
 
 # def get_url_info2(url):

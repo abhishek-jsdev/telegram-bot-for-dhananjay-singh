@@ -1,12 +1,26 @@
 from telethon import TelegramClient
 from telethon.events import NewMessage
 from telethon.tl.types import MessageEntityTextUrl, MessageEntityUrl
+
+# from os import system, name
+# from time import ctime as timeStamp
 from asyncio import run, sleep, CancelledError
 from utils import parse_url
 from datetime import datetime
-from logging import info, warning, error, getLogger, Formatter, DEBUG
+from logging import basicConfig, info, warning, error, DEBUG
 from logging.handlers import RotatingFileHandler
+import logging
 
+# # Configure logging
+# basicConfig(
+#     filename=f"./logs/{(datetime.now()).strftime('%d-%b-%y %H-%M')}.txt",
+#     level=DEBUG,
+#     format="%(asctime)s %(levelname)s: %(message)s",
+#     datefmt="%Y %b %d %H:%M:%S",
+# )
+
+# Clear previous logs
+# system("cls" if name == "nt" else "clear")
 
 # Use your own values from my.telegram.org
 api_id = 20340026
@@ -47,11 +61,11 @@ async def handle_new_message(event):
                 is_amazon_link = parsed_url["is_amazon_link"]
 
                 if is_amazon_link:
-                    message = event.message.text.replace(url, parsed_url["updated"])
-                    event.message.text = message
+                    new_message = event.message.text.replace(url, parsed_url["updated"])
+                    event.message.text = new_message
 
         if is_amazon_link:
-            info("Sending message...")
+            info("Sending ")
             await client.send_message(our_channel_id, event.message)
             info("Message send!")
         else:
@@ -67,31 +81,49 @@ async def handle_new_message(event):
 async def main(restart_time=3600):
     while True:
         # Configure logging
-        timeStamp = (datetime.now()).strftime("%d %b %y - %H%M%S")
-        log = getLogger()
-        log.setLevel(DEBUG)
-        log_handler = RotatingFileHandler(f"{timeStamp}.txt", backupCount=5)
-        log_handler.setLevel(DEBUG)
-        formatter = Formatter(
-            "%(asctime)s %(levelname)s: %(message)s", datefmt="%Y-%b-%d %H:%M:%S"
-        )
-        log_handler.setFormatter(formatter)
-        log.addHandler(log_handler)
+        timeStamp = (datetime.now()).strftime("%d-%b-%y %H%M%S")
+        
+        logger = logging.getLogger()
+        logger.setLevel(logging.DEBUG)
+        # Create a rotating file handler
+        file_handler = RotatingFileHandler(f"{timeStamp}.txt", backupCount=5)
+        file_handler.setLevel(logging.DEBUG)
 
-        await client.start()
-        if client.is_connected:
-            info("Connected!")
+
+        # Create a formatter for the log messages
+        formatter = logging.Formatter(
+            "%(asctime)s %(levelname)s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+        )
+
+        # Add the formatter to the file handler
+        file_handler.setFormatter(formatter)
+
+        # Add the file handler to the logger
+        logger.addHandler(file_handler)
+
+        # basicConfig(
+        #     filename=f"./logs/{timeStamp}.txt",
+        #     level=DEBUG,
+        #     format="%(asctime)s %(levelname)s: %(message)s",
+        #     datefmt="%Y %b %d %H:%M:%S",
+        # )
+
+        # await client.start()
+
+        # if client.is_connected:
+        #     info("Connected!")
 
         await sleep(restart_time)
 
-        await client.disconnect()
-        if client.disconnected:
-            info("Disconnected")
-            await sleep(1.0)
+        # await client.disconnect()
+
+        # if client.disconnected:
+        #     info("Disconnected")
+        #     await sleep(1.0)
 
 
 try:
-    run(main())
+    run(main(5))
 except (CancelledError, KeyboardInterrupt):
     print("Keyboard Interrupted!")
     pass
