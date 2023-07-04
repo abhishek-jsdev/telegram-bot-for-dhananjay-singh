@@ -1,0 +1,7 @@
+python-decouple
+telethon
+crypty
+py-mon
+watchdog
+requests
+pyshorteners

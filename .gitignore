@@ -1,1 +1,5 @@
 node_modules
+__pycache__
+logs
+*.session
+*.session-journal

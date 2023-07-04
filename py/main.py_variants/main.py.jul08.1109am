@@ -3,15 +3,15 @@ from telethon.events import NewMessage
 from telethon.tl.types import MessageEntityTextUrl, MessageEntityUrl
 from asyncio import run, sleep, CancelledError
 from utils import parse_url
-# from datetime import datetime
-# from logging import info, warning, error, getLogger, Formatter, DEBUG
-# from logging.handlers import RotatingFileHandler
+from datetime import datetime
+from logging import info, warning, error, getLogger, Formatter, DEBUG
+from logging.handlers import RotatingFileHandler
 
 
 # Use your own values from my.telegram.org
 api_id = 20340026
 api_hash = "d1c2010562443ded33c1f4fa64f16bc4"
-client = TelegramClient("telegram", api_id, api_hash)
+client = TelegramClient("anon", api_id, api_hash)
 amazon_affiliate_id = "dualwarez-21"
 channels_id = [
     1315464303,
@@ -26,7 +26,7 @@ our_channel_id = -980741307  # our channel id where we want to forward msg
 @client.on(NewMessage(chats=channels_id, incoming=True, forwards=False))
 async def handle_new_message(event):
     try:
-        print("Recieved new message..")
+        info("Recieved new message..")
 
         is_amazon_link = False
 
@@ -43,7 +43,7 @@ async def handle_new_message(event):
                 break
 
             if url:
-                parsed_url = parse_url(url, amazon_affiliate_id)
+                parsed_url = await parse_url(url, amazon_affiliate_id)
                 is_amazon_link = parsed_url["is_amazon_link"]
 
                 if is_amazon_link:
@@ -51,43 +51,48 @@ async def handle_new_message(event):
                     event.message.text = message
 
         if is_amazon_link:
-            print("Sending message...")
+            info("Sending message...")
             await client.send_message(our_channel_id, event.message)
-            print("Message send!")
+            info("Message send!")
         else:
-            # warning("Cannot found amazon link.")
+            warning("Cannot found amazon link.")
             print("Cannot found amazon link.")
 
     except Exception as exception:
-        # error({"message": event.message, "event": event, "error": exception})
-        print("message: ",event.message,"\n","event: ",event,"\n", "error: ",exception)
+        error({"message": event.message, "event": event, "error": exception})
         print("Error occured! Check logs for more.")
         pass
 
 
-# async def main(restart_time=3600):    
-#     while True:
+async def main(restart_time=3600):
+    # Configure logging
+    timeStamp = (datetime.now()).strftime("%d %b %y - %H%M%S")
+    log = getLogger()
+    log.setLevel(DEBUG)
+    log_handler = RotatingFileHandler(f"{timeStamp}.txt", backupCount=5)
+    log_handler.setLevel(DEBUG)
+    formatter = Formatter(
+        "%(asctime)s %(levelname)s: %(message)s", datefmt="%Y-%b-%d %H:%M:%S"
+    )
+    log_handler.setFormatter(formatter)
+    log.addHandler(log_handler)
+    
+    while True:
 
-#         await client.start()
-#         await client.run_until_disconnected()
-#         if client.is_connected:
-#             print("Connected!")
+        await client.start()
+        if client.is_connected:
+            info("Connected!")
 
-#         await sleep(restart_time)
+        await sleep(restart_time)
 
-#         await client.disconnect()
-#         if client.disconnected:
-#             print("Disconnected")
-#             await sleep(1.0)
+        await client.disconnect()
+        if client.disconnected:
+            info("Disconnected")
+            await sleep(1.0)
 
 
-# try:
-#     client.start()
-#     client.run_until_disconnected()
-#     # run(main())
-# except (KeyboardInterrupt):
-#     print("Keyboard Interrupted!")
-#     pass
-
-client.start()
-client.run_until_disconnected()
+try:
+    run(main())
+except (CancelledError, KeyboardInterrupt):
+    print("Keyboard Interrupted!")
+    pass
