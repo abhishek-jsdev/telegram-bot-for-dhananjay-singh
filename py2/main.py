@@ -31,6 +31,7 @@ except Exception as exception:
 
 @Bot.on(events.NewMessage(incoming=True, chats=FROM, forwards=True))
 async def massage_handler(event):
+    print("Recieved new message...")
     try:
         is_amazon_link = False
         url = False
