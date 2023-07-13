@@ -77,7 +77,7 @@ async def massage_handler(event):
             exception,
         )
         print("Error occured! Check logs for more.")
-        pass
+        # pass
 
 
 print("Bot has started.")
