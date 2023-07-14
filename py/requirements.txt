@@ -4,3 +4,4 @@ py-mon
 watchdog
 requests
 pyshorteners
+logging

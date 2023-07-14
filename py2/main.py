@@ -24,6 +24,7 @@ TO = [int(i) for i in TO_.split()]
 try:
     Bot = TelegramClient(SESSION_STRING, APP_ID, API_HASH)
     Bot.start()
+    Bot.run_until_disconnected()
 except Exception as exception:
     print(f"ERROR - {exception}")
     exit(1)
@@ -81,4 +82,4 @@ async def massage_handler(event):
 
 
 print("Bot has started.")
-Bot.run_until_disconnected()
+# Bot.run_until_disconnected()
