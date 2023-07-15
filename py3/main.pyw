@@ -2,11 +2,13 @@ import os
 import random
 import time
 import asyncio
+import requests
+import json
 # import logging
 # from keep_alive import keep_alive,run       #To keep the bot running 24*7
 
 
-from utils import parse_url,printr
+from utils import parse_url,printr,get_compliment
 from telethon.sync import TelegramClient
 from telethon.tl.types import MessageEntityTextUrl, MessageEntityUrl
 from telethon import TelegramClient,events,sync
@@ -17,8 +19,9 @@ from telethon import functions, types
 
 api_id = '20340026'    #Enter your Telegram app API ID
 api_hash = 'd1c2010562443ded33c1f4fa64f16bc4'  # Enter the created API Hash 
-from_chats = [1315464303, 1491489500, 810184328, 1714047949,1450755585]
+from_chats = [1315464303, 1491489500, 810184328, 1714047949,1450755585,980741307]
 to_chat = -980741307
+# to_chat = -1629572275
 amazon_affiliate_id = 'dualwarez-21'
 
 
@@ -32,12 +35,15 @@ async def message_handler(event):
     url = False
 
     printr("New message received!")
-    # printr(event)
+    # printr(event.chat_id)
     printr(event.message.message)
     
-    if event.message.message.lower()=="test":
-        await event.respond("I'm alive!")
-        return
+    # if event.chat_id == -980741307:
+    if event.chat_id == -810184328 or event.chat_id == -980741307:
+        if event.message.message.lower()=="test":
+            compliment = get_compliment()
+            await event.respond(compliment)
+            return
     
     for entity in event.message.entities:
         

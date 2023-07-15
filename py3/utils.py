@@ -1,4 +1,4 @@
-import requests, pyshorteners,logging
+import requests, pyshorteners,logging,json
 
 # Configure the logging module
 # logging.basicConfig(filename='logs.txt', format='%(asctime)s - %(levelname)s - %(message)s')
@@ -72,7 +72,7 @@ def update_url(long_url, unrequire_parameters,affiliate_id):
 
     tiny_url = short_url(new_url)
 
-    printr('new:',new_url,'tiny:',tiny_url,'long:',long_url)
+    # printr('new:',new_url,'tiny:',tiny_url,'long:',long_url)
     return tiny_url
     # if url_exists(new_url):
     #     return new_url
@@ -94,3 +94,7 @@ def parse_url(url,amazon_affiliate_id):
     return url_info
 
 
+def get_compliment():
+    response_API = requests.get("https://complimentr.com/api")
+    compliment = json.loads(response_API.text)['compliment']
+    return compliment
