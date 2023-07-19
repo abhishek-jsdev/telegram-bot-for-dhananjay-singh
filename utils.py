@@ -9,20 +9,10 @@ def printr(*args, **kwargs):
     with open('logs/logs.txt', 'a') as log_file:
         print(formatted_datetime,":", *args, **kwargs,file=log_file)
 
-
-def expand_short_url(short_url):
-    response = requests.head(short_url, allow_redirects=True)
-    return response.url
+unrequire_parameters = ["ref","ref_", "red", "tag", "tat", "th", "linkCode", "psc"]
 
 
-def short_url(long_url):
-    # TinyURL shortener service
-    type_tiny = pyshorteners.Shortener()
-    short_url = type_tiny.tinyurl.short(long_url)
-    return short_url
-
-
-def update_url(long_url, unrequire_parameters,affiliate_id):
+def get_affiliate_url(long_url,affiliate_id, unrequire_parameters=unrequire_parameters):
     long_url_parts = long_url.rsplit("/", 1)
     new_url = long_url_parts[0] + "/"
 
@@ -44,26 +34,4 @@ def update_url(long_url, unrequire_parameters,affiliate_id):
     # add affiliate id
     new_url += "tag=" + affiliate_id
 
-    return short_url(new_url)
-
-
-unrequire_parameters = ["ref","ref_", "red", "tag", "tat", "th", "linkCode", "psc"]
-
-
-# generate new affiliate url using tiny url api
-def parse_url(url,amazon_affiliate_id):
-    url_info = {"long": url, "is_amazon_link": False, "updated": url}
-    
-    url_info["long"] = expand_short_url(url)
-
-    url_info["is_amazon_link"] = "https://www.amazon.in" in url_info["long"]
-    
-    if url_info["is_amazon_link"]:
-        url_info["updated"] = update_url(url_info["long"], unrequire_parameters,amazon_affiliate_id)
-    printr(url_info)
-    return url_info
-
-
-def get_compliment():
-    response_API = requests.get("https://complimentr.com/api")
-    return json.loads(response_API.text)['compliment']
+    return new_url

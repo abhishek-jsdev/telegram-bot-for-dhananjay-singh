@@ -1,17 +1,29 @@
-conda create --name tenv
-conda activate tenv
+#### Uninstall Python and their Env variables
 
-```
-# requirements
+#### Install miniconda from [conda](https://docs.conda.io/en/main/miniconda.html)
+
+#### requirements
 telethon
 crypty
 py-mon
 watchdog
 requests
 pyshorteners
-```
 
+
+```
+# create isolated environment
+conda create --name tenv
+
+# start isolated environment
+conda activate tenv
+
+# install required packages
 pip install telethon crypty py-mon watchdog requests pyshorteners
+
+# start bot
+pymon main.py
+```
 
 
 
