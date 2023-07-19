@@ -1,10 +1,18 @@
+conda create --name tenv
+conda activate tenv
+
+```
+# requirements
 telethon
 crypty
 py-mon
 watchdog
 requests
 pyshorteners
-logging
+```
+
+pip install telethon crypty py-mon watchdog requests pyshorteners
+
 
 
 1315464303 - Offerzone 2.0

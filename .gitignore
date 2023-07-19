@@ -4,3 +4,4 @@ logs
 *.session
 .trash-bin
 *.session-journal
+logs

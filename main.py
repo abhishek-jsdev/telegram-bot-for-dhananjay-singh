@@ -1,21 +1,9 @@
-import os
-import random
-import time
-import asyncio
-import requests
-import json
-# import logging
-# from keep_alive import keep_alive,run       #To keep the bot running 24*7
-
-
 from utils import parse_url,printr,get_compliment
 from telethon.sync import TelegramClient
 from telethon.tl.types import MessageEntityTextUrl, MessageEntityUrl
 from telethon import TelegramClient,events,sync
 from telethon import functions, types
 
-
-# logging.basicConfig(filename='logs.txt', format='%(asctime)s - %(levelname)s - %(message)s')
 
 api_id = '20340026'    #Enter your Telegram app API ID
 api_hash = 'd1c2010562443ded33c1f4fa64f16bc4'  # Enter the created API Hash 
@@ -25,7 +13,7 @@ to_chat = -980741307
 amazon_affiliate_id = 'dualwarez-21'
 
 
-Bot = TelegramClient('foxonfire', api_id, api_hash)
+Bot = TelegramClient('telegram', api_id, api_hash)
 
 
 Bot.start()
@@ -71,23 +59,4 @@ async def message_handler(event):
         printr("Cannot found amazon link.")
 
 
-# keep_alive()
-# Bot.run_until_disconnected()
-
-# async def is_bot_alive():
-#     # while True:
-#     if Bot.is_connected():
-#         printr('bot is alive')
-#     else:
-#         printr('bot is dead')
-#         printr('starting bot')
-#         Bot.start()
-#     await asyncio.sleep(60.0)
-#     is_bot_alive()
-
-#  wrap in Task object
-# -> automatically attaches to event loop and executes
-# async def main():
-#     await asyncio.gather(Bot.run_until_disconnected(),is_bot_alive())
-# asyncio.run(main())
 Bot.run_until_disconnected()
