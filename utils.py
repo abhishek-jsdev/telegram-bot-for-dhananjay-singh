@@ -35,3 +35,5 @@ def get_affiliate_url(long_url,affiliate_id, unrequire_parameters=unrequire_para
     new_url += "tag=" + affiliate_id
 
     return new_url
+
+
