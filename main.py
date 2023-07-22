@@ -1,4 +1,4 @@
-import requests, json, re
+import requests, re
 from pyshorteners import Shortener
 from telethon.sync import TelegramClient
 from telethon.tl.types import MessageEntityTextUrl, MessageEntityUrl
@@ -7,7 +7,7 @@ from telethon import functions, types
 
 
 from strings import API_ID, API_HASH, FROM_CHATS, TO_CHATS, TEST_CHATS, AMAZON_AFFILIATE_ID
-from utils import printr, get_affiliate_url, get_test_response
+from utils import get_affiliate_url, get_test_response
 
 
 Bot = TelegramClient('telegram', API_ID, API_HASH)
@@ -32,7 +32,7 @@ async def new_message_handler(event):
         await event.respond(get_test_response())
         print("Test message send!")
         return
-    # 
+    #
 
 
     start_pointer = 0
@@ -102,7 +102,7 @@ async def new_message_handler(event):
         await Bot.send_message(TO_CHATS, event.message)
 
     else:
-        printr("Cannot found amazon link.")
+        print("Cannot found amazon link.")
 
 
 Bot.run_until_disconnected()
