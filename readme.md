@@ -1,35 +1,37 @@
-#### Uninstall Python and their Env variables
+# Uninstall Python and their Env variables
 
-#### Install miniconda from [conda](https://docs.conda.io/en/main/miniconda.html)
+# Install miniconda from [conda](https://docs.conda.io/en/main/miniconda.html)
 
-#### requirements
-telethon
-crypty
-py-mon
-watchdog
-requests
-pyshorteners
-
-
+# SETUP
+## create isolated environment
 ```
-# create isolated environment
 conda create --name tenv
+```
 
-# start isolated environment
+## start isolated environment
+```
 conda activate tenv
+```
 
-# install required packages
+## install required packages
+```
 pip install telethon crypty py-mon watchdog requests pyshorteners
+# OR
+pip install -r requirements.txt
+```
 
-# start bot
+## start bot
+```
 pymon main.py
 ```
 
+# Packages used
+- telethon
+- crypty
+- py-mon
+- watchdog
+- requests
+- pyshorteners
 
-
-1315464303 - Offerzone 2.0
-1491489500 - Amazon Associates Program
-1714047949 - Trending Loot Deals 2.0
-1450755585 - Trending Loot Deals
-810184328 - Test
-980741307 - Test2
+# NOTE:
+Edit `strings.py` to make it work properly.

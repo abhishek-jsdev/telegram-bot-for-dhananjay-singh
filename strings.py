@@ -9,5 +9,4 @@ TEST_CHATS = [-810184328,-980741307]
 TO_CHATS = -810184328
 # to_chat = -1629572275
 
-API_NAMES = ['compliment','pickup'] #'joke', 'quote'
 # end

@@ -1,0 +1,7 @@
+telethon
+crypty
+py-mon
+watchdog
+colorama
+requests
+pyshorteners
