@@ -5,3 +5,4 @@ watchdog
 colorama
 requests
 pyshorteners
+urllib3
